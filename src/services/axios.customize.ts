@@ -16,7 +16,7 @@ instance.interceptors.request.use(
   function (error) {
     // Do something with the request error
     return Promise.reject(error);
-  }
+  },
 );
 
 // Add a response interceptor
@@ -36,7 +36,7 @@ instance.interceptors.response.use(
       return error.response.data;
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default instance;

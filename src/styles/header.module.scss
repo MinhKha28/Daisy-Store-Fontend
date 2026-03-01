@@ -1,5 +1,68 @@
 .header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: #164e3f;
+  margin: 0 auto 10px auto;
+  padding: 20px 16px;
+
+  .header_category {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 7px 10px;
+    background: #2e5f52;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    gap: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #496d63;
+    }
+  }
+}
+
+.category_dropdown {
+  :global(.ant-dropdown-menu) {
+    margin-top: 20px;
+    width: 100vw;
+    height: 50vh;
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.header-search {
+  width: 100%;
+  height: 45px;
+  :global(.ant-input-affix-wrapper) {
+    height: 45px;
+  }
+  :global(.ant-input-affix-wrapper input.ant-input) {
+    font-size: 17px;
+    font-weight: 600;
+    color: #6b6a6a;
+  }
+
+  :global(.ant-input::placeholder) {
+    height: 45px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  :global(.ant-input-search-button) {
+    height: 45px;
+  }
+  :global(.anticon-search) {
+    font-size: 20px;
+  }
+  :global(.ant-input-clear-icon) {
+    font-size: 20px;
+  }
 }
 
 .header-logo {
@@ -16,13 +79,41 @@
   .header-cart__icon {
     font-size: 25px;
     color: #fff;
+    margin-right: 10px;
+  }
+  .header-cart__title {
+    font-size: 16px;
+    color: #fff;
   }
 }
 
 .header-user {
-  font-size: 16px;
-  font-weight: 650;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  font-size: 14px;
   color: #c2f18c;
+  gap: 0px;
+  position: relative;
+  padding-right: 20px;
+
+  &::after {
+    content: "|";
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff80;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .header-user__account {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+  }
 }
 
 .menu {

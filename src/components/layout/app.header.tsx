@@ -1,5 +1,6 @@
 import {
-  BookOutlined,
+  AppstoreAddOutlined,
+  DownOutlined,
   MenuFoldOutlined,
   ShoppingCartOutlined,
   SmileOutlined,
@@ -21,6 +22,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "styles/header.module.scss";
 import { logoutAPI } from "@/services/api";
+import LoginModal from "../client/auth/login.modal";
 interface IProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
@@ -31,6 +33,7 @@ const AppHeader = (props: IProps) => {
     useCurrentApp();
   const [open, setOpen] = useState<boolean>(false);
   const [openAccount, setOpenAccount] = useState<boolean>(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const navigate = useNavigate();
   const showDrawer = () => setOpen(true);
   const onClose = () => setOpen(false);
@@ -78,11 +81,48 @@ const AppHeader = (props: IProps) => {
       </div>
     </div>
   );
+
+  const categories: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.antgroup.com"
+        >
+          1st menu item
+        </a>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.aliyun.com"
+        >
+          2nd menu item
+        </a>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.luohanacademy.com"
+        >
+          3rd menu item
+        </a>
+      ),
+    },
+  ];
+
   return (
-    <div
-      style={{ margin: "0 auto 10px auto", padding: "10px 16px" }}
-      className={styles["header"]}
-    >
+    <div className={styles["header"]}>
       <Row gutter={16} justify="center" align="middle">
         <Col xs={0} sm={6} md={4} lg={3} xl={3}>
           <div className={styles["header-logo"]}>
@@ -90,6 +130,20 @@ const AppHeader = (props: IProps) => {
               Daisy Story
             </Link>
           </div>
+        </Col>
+
+        <Col xs={0} sm={6} md={4} lg={3} xl={3}>
+          <Dropdown
+            menu={{ items: categories }}
+            placement="bottom"
+            overlayClassName={styles["category_dropdown"]}
+            trigger={["click"]}
+          >
+            <div className={styles["header_category"]}>
+              <AppstoreAddOutlined />
+              Danh mục <DownOutlined />
+            </div>
+          </Dropdown>
         </Col>
 
         <Col xs={4} sm={0} md={0} lg={0} xl={0}>
@@ -112,39 +166,13 @@ const AppHeader = (props: IProps) => {
         </Col>
 
         <Col xs={18} sm={12} md={10} lg={12} xl={10}>
-          <Space.Compact style={{ width: "100%" }}>
+          <Space.Compact className={styles["header-search"]}>
             <Search
-              placeholder="Bạn tìm gì hôm nay"
+              placeholder="Bạn tìm gì hôm nay..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Space.Compact>
-        </Col>
-
-        <Col
-          xs={2}
-          sm={4}
-          md={3}
-          lg={2}
-          xl={2}
-          className={styles["header-cart"]}
-        >
-          <Link to={"/order"}>
-            <Popover
-              content={contentPopover}
-              title="Sản phẩm mới thêm"
-              placement="bottomRight"
-            >
-              <Badge
-                count={0}
-                size="small"
-                showZero
-                className={styles["header-cart__icon"]}
-              >
-                <ShoppingCartOutlined />
-              </Badge>
-            </Popover>
-          </Link>
         </Col>
 
         <Col xs={0} sm={6} md={5} lg={3} xl={3}>
@@ -174,14 +202,47 @@ const AppHeader = (props: IProps) => {
             </Dropdown>
           ) : (
             <Space className={styles["header-user"]}>
-              <SmileOutlined />
-              <Link style={{ color: "rgb(6, 124, 124)" }} to="/login">
-                Tài khoản
-              </Link>
+              <span>Đăng nhập/ Đăng ký</span>
+
+              <div
+                className={styles["header-user__account"]}
+                onClick={() => setOpenLogin(true)}
+              >
+                Tài khoản <DownOutlined />
+              </div>
             </Space>
           )}
         </Col>
+
+        <Col
+          xs={2}
+          sm={4}
+          md={3}
+          lg={2}
+          xl={2}
+          className={styles["header-cart"]}
+        >
+          <Link to={"/order"}>
+            <Popover
+              content={contentPopover}
+              title="Sản phẩm mới thêm"
+              placement="bottomRight"
+            >
+              <Badge
+                count={0}
+                size="small"
+                showZero
+                className={styles["header-cart__icon"]}
+              >
+                <ShoppingCartOutlined />{" "}
+              </Badge>
+              <span className={styles["header-cart__title"]}>Giỏ hàng</span>
+            </Popover>
+          </Link>
+        </Col>
       </Row>
+      {/* Login Modal */}
+      <LoginModal openLogin={openLogin} setOpenLogin={setOpenLogin} />
     </div>
   );
 };
